@@ -24,6 +24,15 @@ axios
   .get(`https://lambda-times-backend.herokuapp.com/articles`)
   .then(data => {
     console.log(data);
+    let articles = data.data.articles;
+
+    let articlesArr = Object.entries(articles);
+    const cardsContainer = document.querySelector('.cards-container');
+    articlesArr.forEach(topic => {
+      topic.forEach(i => {
+        cardsContainer.appendChild(createCards(i));
+      });
+    });
   })
   .catch(err => {
     console.log('Error: ', err);
