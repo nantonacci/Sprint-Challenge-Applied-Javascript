@@ -26,12 +26,21 @@ axios
     console.log(data);
     let articles = data.data.articles;
 
+    //articles into an iterable array
     let articlesArr = Object.entries(articles);
+
+    //container for the end product, the cards
     const cardsContainer = document.querySelector('.cards-container');
-    articlesArr.forEach(topic => {
-      topic.forEach(i => {
-        cardsContainer.appendChild(createCards(i));
+
+    let newArr = [];
+    articlesArr.forEach(item => {
+      item[1].forEach(thing => {
+        newArr.push(thing);
       });
+    });
+
+    newArr.forEach(thing => {
+      cardsContainer.appendChild(createCards(thing));
     });
   })
   .catch(err => {
@@ -57,9 +66,11 @@ function createCards(data) {
   img.src = data.authorPhoto;
 
   imgContainer.appendChild(img);
+  author.appendChild(imgContainer);
 
   const span = document.createElement('span');
-  span.textContent = 'By ${data.authorName}';
+  span.textContent = `By ${data.authorName}`;
+  author.appendChild(span);
 
   card.appendChild(author);
 
